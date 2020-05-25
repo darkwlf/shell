@@ -11,6 +11,7 @@ good luck :)
 ###############################
 from shutdown import *
 import py_compile
+import blkinfo
 import click
 from os.path import basename
 import pyttsx3
@@ -52,6 +53,7 @@ def hardware():
     print(colored('Platform processor:'+ platform.platform(),"green"))
     print(colored('Operating system:'+ platform.system(),"green"))
     print(colored('System info:'+ platform.system(),"green"))
+
 def dos():
     print("""
 developer:dark wolf
@@ -188,6 +190,16 @@ while True:
    elif a.startswith("rmdir "):
       os.rmdir(a[6:])
       print("directory removed!")
+   elif a == "usb-devices":
+      myblkd = blkinfo.BlkDiskInfo()
+      all_my_disks = myblkd.get_disks()
+      for i in all_my_disks:
+         print(i,"\n")
+   elif a == "sleep":
+      while True:
+         time.sleep(1)
+   elif a.startswith("sleep "):
+      time.sleep(a[6:])
    elif a.startswith("compile "):
       os.system('nuitka3 '+a[8:])
    elif a == "hardware":
@@ -201,7 +213,8 @@ while True:
    elif a == "myip":
       ip()
    elif a.startswith("ping "):
-      ping(a[5:],verbose=True,count=99999)
+      while True:
+         ping(a[5:],verbose=True,count=1)
    elif a.startswith("say "):
       b = a[4:]
       s = pyttsx3.init()
